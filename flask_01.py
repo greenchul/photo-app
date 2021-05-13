@@ -12,6 +12,11 @@ def login():
     rendered_html = render_template("login.html")
     return rendered_html
 
+@app.route("/gallery")
+def gallery():
+    rendered_html = render_template("gallery.html", user="Rachel")
+    return rendered_html
+
 
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0")

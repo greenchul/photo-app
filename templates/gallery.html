@@ -15,6 +15,12 @@
                 <h1> {{user}}s gallery</h1>
             </div>
             <div>
+                
+                <img src="{{url_for('get_image')}}?image_name={{image_name}}">
+                <button><a href="{{url_for('gallery')}}?modification=1">Mod 1</a></button>
+                <button><a href="#"></a>Mod 2</button>
+                <button><a href="#"></a>Mod 3</button>
+                <button><a href="#"></a>Mod 4</button>
 
             </div>
         </container>

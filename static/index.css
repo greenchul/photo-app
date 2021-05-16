@@ -17,6 +17,8 @@ html{
 h1{
     margin-bottom: 10px;
     letter-spacing: 2px;
+    animation-name: moveInLeft;
+    animation-duration: 2s;
 }
 
 .main-text{
@@ -31,6 +33,8 @@ h1{
 .main-buttons{
     
     text-align: center;
+    animation-name: moveInRight;
+    animation-duration: 2s;
 }
 
 .buttons{
@@ -43,4 +47,34 @@ h1{
 a, a:hover, a:focus, a:active {
     text-decoration: none;
     color: inherit;
+}
+
+@keyframes moveInLeft {
+    0% {
+        opacity: 0;
+        transform: translateX(-100px);
+    }
+    80% {
+        transform: translateX(10px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translate(0);
+    }
+}
+
+@keyframes moveInRight {
+    0% {
+        opacity: 0;
+        transform: translateX(100px);
+    }
+    80% {
+        transform: translateX(-10px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translate(0);
+    }
 }

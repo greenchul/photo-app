@@ -8,7 +8,7 @@ html{
 
 
 body{
-    /* background-color: #03738C; */
+    background-color: #C7D6D9;
     padding: 0;
     margin: 0
 }
@@ -16,14 +16,14 @@ body{
 h1{
     text-align: center;
     font-size: 50px;
-    color:#D9B1A3;
+    color:#142740;
     text-shadow: 1px 1px black;
     letter-spacing: 5px;
 }
 
 .header{
     background-color: white;
-    clip-path: polygon(0 0, 100% 0%, 100% 70%, 0 100%);
+    clip-path: polygon(0 0, 100% 0%, 100% 100%, 0 100%);
     height: 20vh;
     
 }
@@ -61,12 +61,12 @@ img{
 button{
     border-radius: 20px;
     padding: 10px;
-    background-color: #62C3D9;
-    box-shadow: 2px 2px 2px #5A7302;
+    /* background-color: #62C3D9; */
+    box-shadow: 2px 2px 2px black;
 }
 
 .back-btn{
-    color: #5A7302;
+    color: #142740;
     
 }
 

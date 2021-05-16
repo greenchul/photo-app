@@ -3,7 +3,7 @@ import cv2
 import os
 from open_cv_test import blur_image
 from image_manager import Image_manager
-path_to_image = os.path.join("static", "images", "cat01.jpeg")
+path_to_image = os.path.join("static", "images", "trees01.jpeg")
 image_manager = Image_manager(path_to_image)
 
 app = Flask(__name__)
@@ -64,6 +64,11 @@ def get_image():
 
     return response   
 
+
+@app.route("/upload")
+def upload_img():
+    rendered_html = render_template("upload.html")
+    return
 
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0")

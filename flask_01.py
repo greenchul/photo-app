@@ -23,13 +23,15 @@ def gallery():
     # Url arguments can be added to the url like this ?name=Peter&age=57
     # Get the url arguments if there are any
     url_arguments = request.args.to_dict(flat=False)
-
+    image_name = "standard"
     # if there are any url arguments, print them to the console here
     if len(url_arguments) > 0:
         print(f"\nThere were some url arguments and they were:\n{url_arguments}\n")
         if url_arguments["modification"][0] == "1":
             print("Mod 1")
-            image_name = "blurred"
+            image_name = "blurred"  
+            
+            
         if url_arguments["modification"][0] == "2":
             image_name = "edged"
         if url_arguments["modification"][0] == "3":

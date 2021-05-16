@@ -8,7 +8,7 @@ html{
 
 
 body{
-    background-color: #03738C;
+    /* background-color: #03738C; */
     padding: 0;
     margin: 0
 }
@@ -41,7 +41,11 @@ img{
     margin-right: auto;
     width: 50%;
     margin-top: 40px;
+    
+    
 }
+
+
 
 .editor{
     margin: 0 auto;

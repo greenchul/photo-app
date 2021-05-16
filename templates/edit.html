@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="/static/edit_image.css">
+    </head>
+    <body>
+        <container>
+            <div class="header">
+                <a href="/" class="back-btn"><i class="fas fa-angle-double-left"></i></a>
+                <h1>Edit Image</h1>
+            </div>
+            <div class="editor">
+                
+                <img src="{{url_for('get_image')}}?image_name={{image_name}}">
+
+                <div class="buttons">
+                    <button><a href="{{url_for('gallery')}}?modification=1">Blur <i class="far fa-eye"></i></a></button>
+                    <button><a href="{{url_for('gallery')}}?modification=3">Greyscale <i class="fas fa-image"></i></a></button>
+                    <button><a href="{{url_for('gallery')}}?modification=4"> Black & white <i class="fas fa-camera-retro"></i></a></button>
+                    <button><a href="{{url_for('gallery')}}?modification=2">Edge detect <i class="fas fa-expand"></i></a></button>
+                </div>
+                
+
+            </div>
+        </container>
+        <script src="https://kit.fontawesome.com/a3249904fb.js" crossorigin="anonymous"></script>
+        <script src="" async defer></script>
+    </body>
+</html>

@@ -18,7 +18,7 @@ def login():
     rendered_html = render_template("login.html")
     return rendered_html
 
-@app.route("/gallery")
+@app.route("/edit")
 def gallery():
     # Url arguments can be added to the url like this ?name=Peter&age=57
     # Get the url arguments if there are any
@@ -30,11 +30,18 @@ def gallery():
         if url_arguments["modification"][0] == "1":
             print("Mod 1")
             image_name = "blurred"
+        if url_arguments["modification"][0] == "2":
+            image_name = "edged"
+        if url_arguments["modification"][0] == "3":
+            image_name = "greyscale"
+        if url_arguments["modification"][0] == "4":
+            image_name = "black_and_white"
+        
             
     else:
-        image_name = "standard" 
+        image_name = "standard"  
 
-    rendered_html = render_template("gallery.html", user="Rachel", image_name = image_name)
+    rendered_html = render_template("edit.html", user="Rachel", image_name = image_name)
     return rendered_html
 
 @app.route("/get_image")

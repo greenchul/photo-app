@@ -1,10 +1,12 @@
 from flask import Flask, request, render_template, make_response
+
 import cv2
 import os
 from open_cv_test import blur_image
 from image_manager import Image_manager
 path_to_image = os.path.join("static", "images", "trees01.jpeg")
 image_manager = Image_manager(path_to_image)
+
 
 app = Flask(__name__)
 

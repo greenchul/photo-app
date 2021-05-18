@@ -1,4 +1,6 @@
 from flask import Flask, request, render_template, make_response
+import json
+
 # this in in tile puzzle branch
 import cv2
 import os
@@ -72,8 +74,48 @@ def upload_img():
     rendered_html = render_template("upload.html")
     return
 
+@app.route("/puzzle")
+def puzzle():
+    
+    cat_image = cv2.imread(os.path.join("static", "images", "cat01.jpeg"))
+    print(cat_image.shape)
+
+    number_of_rows = 4
+    number_of_cols = 5
+
+    if cat_image.shape[1] % number_of_cols:
+        # the image is not an exact multiple wide
+        desired_width = round(cat_image.shape[1]/number_of_cols) * number_of_cols
+        desired_height = round(cat_image.shape[0]/number_of_rows) * number_of_rows
+        image = cv2.resize(cat_image, (desired_width, desired_height))
+        
+
+        
+    else:
+        image = cat_image  
+
+    tile_width = int(image.shape[1] / number_of_cols)
+    tile_height = int(image.shape[0] / number_of_rows)
+
+    
+    paths_to_image = []
+
+    for row_index in range(number_of_rows):
+        tile_row_index = tile_height * row_index
+        for col_index in range(number_of_cols):
+            tile_col_index = tile_width * col_index
+            tile = image[tile_row_index: tile_row_index + tile_height, tile_col_index: tile_col_index + tile_width]
+            file_name = f"row_{row_index}_col_{col_index}.png"
+            path_to_image = os.path.join("static", "images", "puzzle", file_name)
+            paths_to_image.append(path_to_image)
+            cv2.imwrite(path_to_image, tile)
+
+    paths_to_image_as_json = json.dumps(paths_to_image)
+    rendered_html = render_template("puzzle.html", paths_to_image = paths_to_image, number_of_rows = number_of_rows, number_of_cols = number_of_cols, paths_to_image_as_json = paths_to_image_as_json)
+    return rendered_html
+
 if __name__ == "__main__":
-    app.run(debug=True, host="0.0.0.0")
+    app.run(debug=True, host="0.0.0.0")        
 
 
 

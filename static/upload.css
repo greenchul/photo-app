@@ -24,6 +24,8 @@ body{
     grid-template-columns: 1fr 1fr;
     align-items: center;
     margin:  auto;
+    /* justify-items: center; */
+    height: 80vh;
    
 }
 

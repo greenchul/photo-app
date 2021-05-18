@@ -1,16 +1,32 @@
 from flask import Flask, request, render_template, make_response
 import json
-
-# this in in tile puzzle branch
+from flask_dropzone import Dropzone
 import cv2
 import os
-from open_cv_test import blur_image
 from image_manager import Image_manager
-path_to_image = os.path.join("static", "images", "trees01.jpeg")
-image_manager = Image_manager(path_to_image)
+from image_manager import get_path_to_image
+# path_to_image = os.path.join("static", "images", "trees01.jpeg")
+
+basedir = os.path.abspath(os.path.dirname(__file__))
 
 
 app = Flask(__name__)
+
+app.config.update(
+    UPLOADED_PATH = os.path.join(basedir, 'uploads'),
+    DROPZONE_ALLOWED_FILE_TYPE = "image",
+    DROPZONE_MAX_FILES = "1" 
+
+)
+ 
+dropzone = Dropzone(app)
+@app.route("/upload", methods=['POST', 'GET'])    
+def upload(): 
+    if request.method == "POST":
+        file = request.files.get('file')
+        file.save(os.path.join(app.config['UPLOADED_PATH'], file.filename))
+    rendered_html = render_template("upload.html")
+    return rendered_html
 
 @app.route("/")
 def index():
@@ -53,12 +69,13 @@ def gallery():
 @app.route("/get_image")
 def get_image():
 
-    # Url arguments can be added to the url like this ?image_name=Peter&age=57
-    # Get the url arguments if there are any
+   
     url_arguments = request.args.to_dict(flat=False)
     image_name = url_arguments["image_name"][0]
 
-    # print(f"Name in get_spark_image = {image_name}")
+    path_to_image = get_path_to_image()
+    image_manager = Image_manager(path_to_image)  
+
 
     image = image_manager.get_image(image_name)
 
@@ -69,10 +86,10 @@ def get_image():
     return response   
 
 
-@app.route("/upload")
-def upload_img():
-    rendered_html = render_template("upload.html")
-    return
+# @app.route("/upload")
+# def upload_img():
+#     rendered_html = render_template("upload.html")
+#     return
 
 @app.route("/puzzle")
 def puzzle():

@@ -5,21 +5,39 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title></title>
+        {{ dropzone.load_css() }}
+        <style>
+            .dropzone {
+                border: 2px dashed #142740;
+                margin: 10%;
+                width: 80%;
+                min-height: 400px;
+            }
+        </style>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="">
+        <link rel="stylesheet" href="/static/upload.css">
     </head>
     <body>
-      <container>
-        <div class="header">
-            
-            <h1>Upload image</h1>
+      <div class="main-container">
+        <div class="upload-container">
+          <div class="title-side">
+              <h1>Upload image</h1>
+          </div>
+  
+          <div class="upload-side"> 
+            {{ dropzone.create(action='upload') }}
+            {{ dropzone.load_js() }}
+            {{ dropzone.config() }}
+          </div>
         </div>
-        <div>
-            
-        </div>
-      </container>
-        
+        <div class="btn-div">
+          <button><a href="/edit">Next</a></button>
+        </div>  
+
+      </div>
+
+      
         <script src="" async defer></script>
     </body>
 </html>

@@ -1,5 +1,22 @@
 import cv2
 import os
+basedir = os.path.abspath(os.path.dirname(__file__))
+UPLOADED_PATH = os.path.join(basedir, 'uploads'),
+
+def load_images_from_folder():
+    images=[]
+    for filename in os.listdir(os.path.join(basedir, 'uploads')):
+        
+        images.append(filename)
+    return images
+
+def get_path_to_image():
+    uploaded_images = load_images_from_folder()
+    
+
+    uploaded_image = uploaded_images[0]
+    image_path = f"uploads/{uploaded_image}"
+    return image_path
 
 class Image_manager:
     """

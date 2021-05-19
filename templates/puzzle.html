@@ -7,18 +7,18 @@
         <title></title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="">
+        <link rel="stylesheet" href="/static/puzzle.css">
     </head>
     <body>
         <h1>Puzzle!</h1>
-        {{paths_to_image}}
+        <!-- {{paths_to_image}}
         
         {% for path_to_image in paths_to_image %}
         <!-- {{path_to_image}} <br> -->
-        <img src="{{path_to_image}}">
-        {% endfor %}
-        <br>
-        <br>
+        <!-- <img src="{{path_to_image}}"> -->
+        <!-- {% endfor %}
+        <br> -->
+        <!-- <br>
         {% for row_index in range(number_of_rows) %}
         <br>
             {% for col_index in range(number_of_cols) %}
@@ -26,13 +26,42 @@
             <img src="{{paths_to_image[image_index]}}">
 
             {% endfor %}
-        {% endfor %}
+        {% endfor %} -->
+        <!-- <hr> --> 
+        <div class="puzzle-container">
+            <div class="image-container">
+
+            </div>
+
+        </div>
 
         <script>
             var paths_to_image = JSON.parse('{{paths_to_image_as_json|safe}}')
             console.log(paths_to_image);
             var number_of_cols = {{number_of_cols}}
             console.log(number_of_cols);
+            let imageContainer = document.querySelector(".image-container")
+            console.log(imageContainer)
+
+            for (let index = 0; index < paths_to_image.length; index++){
+                console.log(paths_to_image[index])
+                path_to_image = paths_to_image[index]
+                createdImage = document.createElement("img")
+                createdImage.setAttribute("src", path_to_image)
+                createdImage.setAttribute("draggable", true)
+                imageContainer.appendChild(createdImage)
+
+
+            }
+
+            let images = document.querySelectorAll(".image-container > img")
+            console.log(images)
+
+            images.addEventListener("dragstart", dragstart)
+
+            function dragstart(){
+                console.log("dragging")
+            }
         </script>
 
     </body>

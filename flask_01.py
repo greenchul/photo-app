@@ -86,15 +86,11 @@ def get_image():
     return response   
 
 
-# @app.route("/upload")
-# def upload_img():
-#     rendered_html = render_template("upload.html")
-#     return
 
 @app.route("/puzzle")
 def puzzle():
-    
-    cat_image = cv2.imread(os.path.join("static", "images", "cat01.jpeg"))
+    path_to_image = get_path_to_image()
+    cat_image = cv2.imread(path_to_image)
     print(cat_image.shape)
 
     number_of_rows = 4
@@ -112,7 +108,7 @@ def puzzle():
         image = cat_image  
 
     tile_width = int(image.shape[1] / number_of_cols)
-    tile_height = int(image.shape[0] / number_of_rows)
+    tile_height = int(image.shape[0] / number_of_rows)  
 
     
     paths_to_image = []
@@ -125,7 +121,7 @@ def puzzle():
             file_name = f"row_{row_index}_col_{col_index}.png"
             path_to_image = os.path.join("static", "images", "puzzle", file_name)
             paths_to_image.append(path_to_image)
-            cv2.imwrite(path_to_image, tile)
+            cv2.imwrite(path_to_image, tile)   
 
     paths_to_image_as_json = json.dumps(paths_to_image)
     rendered_html = render_template("puzzle.html", paths_to_image = paths_to_image, number_of_rows = number_of_rows, number_of_cols = number_of_cols, paths_to_image_as_json = paths_to_image_as_json)
@@ -133,7 +129,7 @@ def puzzle():
 
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0")        
-
+   
 
 
 

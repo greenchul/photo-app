@@ -38,6 +38,10 @@
 
             </div>
 
+            <div class="random-img">
+
+            </div>
+
         </div>
 
         
@@ -83,6 +87,8 @@
 
             // shuffle images
 
+            let randomImgDiv = document.querySelector(".random-img")
+
             function shuffleImage(){
                 console.log("shuffle image")
                 // remove correct image
@@ -90,12 +96,21 @@
                 // shuffle array
                 const shuffled = listOfImages.sort(() => Math.random() - 0.5)
                 shuffled.forEach(image=>{
-                    imageContainer.appendChild(image)
+                    createdDiv = document.createElement("div")
+                    createdDiv.setAttribute("class", "grid")
+                    imageContainer.appendChild(createdDiv)
+                    createdDiv.appendChild(image)
                 })
+                // remove random box
+                let rand = Math.floor(Math.random() * 19)
+                console.log("random is " + rand)
+                let randomImage = shuffled[rand]
+                console.log(randomImage)
+                randomImgDiv.appendChild(randomImage)
                 
             }
 
-                //add back in random order
+               
 
 
             
@@ -121,8 +136,18 @@
 
             function drop(event) {
                 event.preventDefault();
-                let data = event.dataTransfer.getData("text");
-                event.target.appendChild(document.getElementById(data));
+                // let data = event.dataTransfer.getData("text");
+                // event.currentTarget.classList.remove("moving")
+                // event.target.appendChild(document.getElementById(data));
+                
+                const id = event.dataTransfer.getData("text");
+                const movingImg = document.getElementById(id);
+                const dropZone = event.target;
+                movingImg.classList.remove("moving");
+                dropZone.appendChild(movingImg);
+                
+                
+                
                 }
         </script>
 

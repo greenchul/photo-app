@@ -14,7 +14,7 @@
         <!-- {{paths_to_image}}
         
         {% for path_to_image in paths_to_image %}
-        <!-- {{path_to_image}} <br> -->
+         {{path_to_image}} <br> -->
         <!-- <img src="{{path_to_image}}"> -->
         <!-- {% endfor %}
         <br> -->
@@ -28,12 +28,19 @@
             {% endfor %}
         {% endfor %} -->
         <!-- <hr> --> 
+        <div>
+            <button class="btn">Shuffle</button>
+
+        </div>
         <div class="puzzle-container">
-            <div class="image-container">
+            
+            <div class="image-container" ondragover="allowDrop(event)" ondrop="drop(event)" >
 
             </div>
 
         </div>
+
+        
 
         <script>
             var paths_to_image = JSON.parse('{{paths_to_image_as_json|safe}}')
@@ -43,25 +50,80 @@
             let imageContainer = document.querySelector(".image-container")
             console.log(imageContainer)
 
+            const listOfImages = []
+
+            // loop through path to images array and create new image array
             for (let index = 0; index < paths_to_image.length; index++){
                 console.log(paths_to_image[index])
                 path_to_image = paths_to_image[index]
+                imageId = index
+                
+                console.log(imageId)
                 createdImage = document.createElement("img")
                 createdImage.setAttribute("src", path_to_image)
                 createdImage.setAttribute("draggable", true)
-                imageContainer.appendChild(createdImage)
-
-
+                createdImage.setAttribute("id", imageId)
+                // imageContainer.appendChild(createdImage)
+                listOfImages.push(createdImage)
             }
+
+            // add images to div
+            console.log(listOfImages)
+            listOfImages.forEach(image =>{
+                imageContainer.appendChild(image)
+            })
+
+            let shuffleBtn = document.querySelector(".btn")
+
+            shuffleBtn.addEventListener("click", shuffleImage)
+
+            // select images, returns node array
 
             let images = document.querySelectorAll(".image-container > img")
-            console.log(images)
 
-            images.addEventListener("dragstart", dragstart)
+            // shuffle images
 
-            function dragstart(){
-                console.log("dragging")
+            function shuffleImage(){
+                console.log("shuffle image")
+                // remove correct image
+                imageContainer.innerHTML = " "
+                // shuffle array
+                const shuffled = listOfImages.sort(() => Math.random() - 0.5)
+                shuffled.forEach(image=>{
+                    imageContainer.appendChild(image)
+                })
+                
             }
+
+                //add back in random order
+
+
+            
+            
+            // add event listener to each image
+            images.forEach(image => {
+                console.log(image)
+                image.addEventListener("dragstart", dragstart)
+            });
+
+            
+            // dragging functions
+
+            function dragstart(event){
+                console.log("dragging")
+                event.dataTransfer.setData("text", event.target.id)
+                event.currentTarget.classList.add("moving")
+            }
+
+            function allowDrop(event) {
+                event.preventDefault();
+            }
+
+            function drop(event) {
+                event.preventDefault();
+                let data = event.dataTransfer.getData("text");
+                event.target.appendChild(document.getElementById(data));
+                }
         </script>
 
     </body>

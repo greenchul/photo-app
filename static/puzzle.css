@@ -27,3 +27,18 @@ h1{
     grid-template-rows: 1fr 1fr 1fr 1fr;
     border: 1px solid black
 }
+
+.moving{
+    border: 3px dashed salmon;
+}
+
+img{
+    border: 1px solid rgba(0, 0, 0, 0.521);
+    cursor: move;
+}
+
+.puzzle-container{
+    margin: 0 auto;
+    width: 80%;
+    text-align: center;
+}

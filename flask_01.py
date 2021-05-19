@@ -111,7 +111,7 @@ def puzzle():
     tile_height = int(image.shape[0] / number_of_rows)  
 
     
-    paths_to_image = []
+    paths_to_image = []  
 
     for row_index in range(number_of_rows):
         tile_row_index = tile_height * row_index

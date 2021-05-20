@@ -29,7 +29,7 @@ h1{
 }
 
 .moving{
-    
+    color: yellow;
 }
 
 img{
@@ -53,5 +53,8 @@ img{
 }
 
 .random-img{
-    display: inline-block;
+    display: none;
+    background-color: cornsilk;
+    height: 60px;
+    width: 60px;
 }

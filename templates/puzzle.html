@@ -34,15 +34,17 @@
         </div>
         <div class="puzzle-container">
             
-            <div class="image-container" ondragover="allowDrop(event)" ondrop="drop(event)" >
+            <div class="image-container"  >
 
             </div>
 
-            <div class="random-img">
+            <div class="random-img" >
 
             </div>
 
         </div>
+
+        <!-- ondragover="allowDrop(event)" ondrop="drop(event)" -->
 
         
 
@@ -52,17 +54,17 @@
             var number_of_cols = {{number_of_cols}}
             console.log(number_of_cols);
             let imageContainer = document.querySelector(".image-container")
-            console.log(imageContainer)
+            
 
             const listOfImages = []
 
             // loop through path to images array and create new image array
             for (let index = 0; index < paths_to_image.length; index++){
-                console.log(paths_to_image[index])
+                
                 path_to_image = paths_to_image[index]
                 imageId = index
                 
-                console.log(imageId)
+                
                 createdImage = document.createElement("img")
                 createdImage.setAttribute("src", path_to_image)
                 createdImage.setAttribute("draggable", true)
@@ -72,7 +74,7 @@
             }
 
             // add images to div
-            console.log(listOfImages)
+            
             listOfImages.forEach(image =>{
                 imageContainer.appendChild(image)
             })
@@ -90,7 +92,7 @@
             let randomImgDiv = document.querySelector(".random-img")
 
             function shuffleImage(){
-                console.log("shuffle image")
+                
                 // remove correct image
                 imageContainer.innerHTML = " "
                 // shuffle array
@@ -100,24 +102,39 @@
                     createdDiv.setAttribute("class", "grid")
                     imageContainer.appendChild(createdDiv)
                     createdDiv.appendChild(image)
+                    createdDiv.addEventListener("dragover", allowDrop)
+                    createdDiv.addEventListener("drop", drop)
                 })
                 // remove random box
                 let rand = Math.floor(Math.random() * 19)
-                console.log("random is " + rand)
-                let randomImage = shuffled[rand]
-                console.log(randomImage)
-                randomImgDiv.appendChild(randomImage)
                 
+                let randomImage = shuffled[rand]
+                
+                randomImgDiv.appendChild(randomImage)
+                randomImgDiv.style.display = "inline-block"
+                randomImgDiv.addEventListener("dragover", allowDrop)
+                randomImgDiv.addEventListener("drop", drop)
+                console.log(listOfImages)
+                console.log(shuffled)
             }
 
-               
+            function checkIfWon(){
+                
+                console.log(imageContainer.children)
+                let arrayOfDivs = imageContainer.children
+                for (let index = 0; index<arrayOfDivs.length; index++){
+                    console.log(arrayOfDivs[index])
+                    let div = arrayOfDivs[index]
+                   
+                }
+            }
 
 
             
             
             // add event listener to each image
             images.forEach(image => {
-                console.log(image)
+                
                 image.addEventListener("dragstart", dragstart)
             });
 
@@ -131,24 +148,41 @@
             }
 
             function allowDrop(event) {
-                event.preventDefault();
+                
+                if (event.target.classList == "grid" || event.target.classList == "random-img"){
+                    event.preventDefault();
+                    
+                    
+                }
+                else{
+                    console.log("dont drop me here")
+                }
+
             }
 
             function drop(event) {
-                event.preventDefault();
-                // let data = event.dataTransfer.getData("text");
-                // event.currentTarget.classList.remove("moving")
-                // event.target.appendChild(document.getElementById(data));
+               
                 
+                
+                event.preventDefault();
                 const id = event.dataTransfer.getData("text");
                 const movingImg = document.getElementById(id);
                 const dropZone = event.target;
                 movingImg.classList.remove("moving");
                 dropZone.appendChild(movingImg);
+            }
+                
+
+                
+                // let data = event.dataTransfer.getData("text");
+                // event.currentTarget.classList.remove("moving")
+                // event.target.appendChild(document.getElementById(data));
                 
                 
                 
-                }
+                
+                
+                
         </script>
 
     </body>

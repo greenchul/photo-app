@@ -43,6 +43,9 @@
             </div>
 
         </div>
+        <div>
+            <span class="game-text">Game Won!</span>
+        </div>
 
         <!-- ondragover="allowDrop(event)" ondrop="drop(event)" -->
 
@@ -54,7 +57,8 @@
             var number_of_cols = {{number_of_cols}}
             console.log(number_of_cols);
             let imageContainer = document.querySelector(".image-container")
-            
+            let gameWon = false
+            let gameText = document.querySelector(".game-text")
 
             const listOfImages = []
 
@@ -114,19 +118,45 @@
                 randomImgDiv.style.display = "inline-block"
                 randomImgDiv.addEventListener("dragover", allowDrop)
                 randomImgDiv.addEventListener("drop", drop)
-                console.log(listOfImages)
-                console.log(shuffled)
+                // console.log(listOfImages)
+                // console.log(shuffled)
+                gameText.style.display = "none"
+                gameWon = false;
             }
 
             function checkIfWon(){
-                
+                const idOrder = []
+                const correctOrder = ["0","1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19"]
+                let gameWon;
                 console.log(imageContainer.children)
                 let arrayOfDivs = imageContainer.children
                 for (let index = 0; index<arrayOfDivs.length; index++){
-                    console.log(arrayOfDivs[index])
+                    
                     let div = arrayOfDivs[index]
-                   
+                    
+                    if(!div.firstChild){
+                        console.log("no child image element - game not complete by user")
+                        return
+                    }
+                    else{
+                        console.log("Puzzle complete")
+                        let image = div.firstChild
+                     
+                        idOrder.push((image.id))
+                      
+                        // check if arrays match
+                        for(let index = 0; index< correctOrder.length; index ++){
+                            if (correctOrder[index] === idOrder[index]){
+                                gameWon = true
+                            }
+                            else{
+                                gameWon = false;
+                            }
+                        }  
+                    
+                    }
                 }
+                return gameWon
             }
 
 
@@ -142,7 +172,7 @@
             // dragging functions
 
             function dragstart(event){
-                console.log("dragging")
+                
                 event.dataTransfer.setData("text", event.target.id)
                 event.currentTarget.classList.add("moving")
             }
@@ -154,9 +184,7 @@
                     
                     
                 }
-                else{
-                    console.log("dont drop me here")
-                }
+                
 
             }
 
@@ -170,13 +198,20 @@
                 const dropZone = event.target;
                 movingImg.classList.remove("moving");
                 dropZone.appendChild(movingImg);
+                gameWon = checkIfWon()
+                console.log(gameWon)
+                if (gameWon){
+                    
+                    gameText.style.display = "block"
+                }
             }
+
+
+           
                 
 
                 
-                // let data = event.dataTransfer.getData("text");
-                // event.currentTarget.classList.remove("moving")
-                // event.target.appendChild(document.getElementById(data));
+                
                 
                 
                 

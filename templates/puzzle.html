@@ -10,25 +10,9 @@
         <link rel="stylesheet" href="/static/puzzle.css">
     </head>
     <body>
-        <h1>Puzzle!</h1>
-        <!-- {{paths_to_image}}
+        <h1>Puzzle</h1>
         
-        {% for path_to_image in paths_to_image %}
-         {{path_to_image}} <br> -->
-        <!-- <img src="{{path_to_image}}"> -->
-        <!-- {% endfor %}
-        <br> -->
-        <!-- <br>
-        {% for row_index in range(number_of_rows) %}
-        <br>
-            {% for col_index in range(number_of_cols) %}
-            {% set image_index = row_index * number_of_cols + col_index %}
-            <img src="{{paths_to_image[image_index]}}">
-
-            {% endfor %}
-        {% endfor %} -->
-        <!-- <hr> --> 
-        <div>
+        <div class="btn-div">
             <button class="btn">Shuffle</button>
 
         </div>
@@ -47,7 +31,6 @@
             <span class="game-text">Game Won!</span>
         </div>
 
-        <!-- ondragover="allowDrop(event)" ondrop="drop(event)" -->
 
         
 
@@ -57,42 +40,28 @@
             var number_of_cols = {{number_of_cols}}
             console.log(number_of_cols);
             let imageContainer = document.querySelector(".image-container")
-            let gameWon = false
             let gameText = document.querySelector(".game-text")
-
             const listOfImages = []
+            let shuffleBtn = document.querySelector(".btn")
+            shuffleBtn.addEventListener("click", shuffleImage)
 
             // loop through path to images array and create new image array
             for (let index = 0; index < paths_to_image.length; index++){
-                
                 path_to_image = paths_to_image[index]
                 imageId = index
-                
-                
                 createdImage = document.createElement("img")
                 createdImage.setAttribute("src", path_to_image)
                 createdImage.setAttribute("draggable", true)
                 createdImage.setAttribute("id", imageId)
-                // imageContainer.appendChild(createdImage)
                 listOfImages.push(createdImage)
             }
 
             // add images to div
-            
             listOfImages.forEach(image =>{
                 imageContainer.appendChild(image)
             })
 
-            let shuffleBtn = document.querySelector(".btn")
-
-            shuffleBtn.addEventListener("click", shuffleImage)
-
-            // select images, returns node array
-
             let images = document.querySelectorAll(".image-container > img")
-
-            // shuffle images
-
             let randomImgDiv = document.querySelector(".random-img")
 
             function shuffleImage(){
@@ -111,15 +80,11 @@
                 })
                 // remove random box
                 let rand = Math.floor(Math.random() * 19)
-                
                 let randomImage = shuffled[rand]
-                
                 randomImgDiv.appendChild(randomImage)
                 randomImgDiv.style.display = "inline-block"
                 randomImgDiv.addEventListener("dragover", allowDrop)
                 randomImgDiv.addEventListener("drop", drop)
-                // console.log(listOfImages)
-                // console.log(shuffled)
                 gameText.style.display = "none"
                 gameWon = false;
             }
@@ -146,6 +111,7 @@
                       
                         // check if arrays match
                         for(let index = 0; index< correctOrder.length; index ++){
+                            
                             if (correctOrder[index] === idOrder[index]){
                                 gameWon = true
                             }
@@ -155,6 +121,10 @@
                         }  
                     
                     }
+                }
+
+                if (gameWon){
+                    gameText.style.display = "block"
                 }
                 return gameWon
             }
@@ -198,12 +168,8 @@
                 const dropZone = event.target;
                 movingImg.classList.remove("moving");
                 dropZone.appendChild(movingImg);
-                gameWon = checkIfWon()
-                console.log(gameWon)
-                if (gameWon){
-                    
-                    gameText.style.display = "block"
-                }
+                checkIfWon()
+                
             }
 
 

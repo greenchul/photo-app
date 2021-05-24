@@ -91,6 +91,7 @@ def get_image():
 def puzzle():
     path_to_image = get_path_to_image()
     cat_image = cv2.imread(path_to_image)
+    cat_image = cv2.resize(cat_image, (500,500))
     print(cat_image.shape)
 
     number_of_rows = 4

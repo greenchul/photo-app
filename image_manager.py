@@ -3,20 +3,6 @@ import os
 basedir = os.path.abspath(os.path.dirname(__file__))
 UPLOADED_PATH = os.path.join(basedir, 'uploads'),
 
-def load_images_from_folder():
-    images=[]
-    for filename in os.listdir(os.path.join(basedir, 'uploads')):
-        
-        images.append(filename)
-    return images
-
-def get_path_to_image():
-    uploaded_images = load_images_from_folder()
-    
-
-    uploaded_image = uploaded_images[0]
-    image_path = f"uploads/{uploaded_image}"
-    return image_path
 
 class Image_manager:
     """
@@ -43,16 +29,16 @@ class Image_manager:
         grey_image = cv2.cvtColor(self.image, cv2.COLOR_BGR2GRAY)
         (thresh, black_and_white_image) = cv2.threshold(grey_image, 120, 255, cv2.THRESH_BINARY)
         return black_and_white_image
-    def get_image(self, image_name):
-        if image_name == "standard":
+    def get_image(self, image_modification):
+        if image_modification == "standard":
             return self.image
-        if image_name == "blurred":
+        if image_modification == "blurred":
             return self.blur_image()
-        if image_name == "edged":
+        if image_modification == "edged":
             return self.edge_detect()
-        if image_name == "greyscale":
+        if image_modification == "greyscale":
             return self.greyscale()
-        if image_name == "black_and_white":
+        if image_modification == "black_and_white":
             return self.black_and_white()
 
 

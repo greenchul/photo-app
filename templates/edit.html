@@ -20,11 +20,11 @@
                     </div>
 
                     <div class="buttons">
-                        <button><a href="{{url_for('gallery')}}?modification=1">Blur <i class="far fa-eye"></i></a></button>
-                        <button><a href="{{url_for('gallery')}}?modification=3">Greyscale <i class="fas fa-image"></i></a></button>
-                        <button><a href="{{url_for('gallery')}}?modification=4"> Black & white <i class="fas fa-camera-retro"></i></a></button>
-                        <button><a href="{{url_for('gallery')}}?modification=2">Edge detect <i class="fas fa-expand"></i></a></button>
-                        <button><a href="{{url_for('gallery')}}">Original <i class="far fa-image"></i></a></button>
+                        <button><a href="{{url_for('edit')}}?modification=1">Blur <i class="far fa-eye"></i></a></button>
+                        <button><a href="{{url_for('edit')}}?modification=3">Greyscale <i class="fas fa-image"></i></a></button>
+                        <button><a href="{{url_for('edit')}}?modification=4"> Black & white <i class="fas fa-camera-retro"></i></a></button>
+                        <button><a href="{{url_for('edit')}}?modification=2">Edge detect <i class="fas fa-expand"></i></a></button>
+                        <button><a href="{{url_for('edit')}}">Original <i class="far fa-image"></i></a></button>
                         <button><a href="/puzzle">Puzzle <i class="fas fa-puzzle-piece"></i></a></button>
                     </div>
 
@@ -32,7 +32,7 @@
                 <div class="right-side">
 
                     <div class="img-container">
-                        <img src="{{url_for('get_image')}}?image_name={{image_name}}">
+                        <img src="{{url_for('get_image')}}?image_modification={{image_modification}}">
                     </div>
 
  

@@ -1,16 +1,28 @@
-from flask import Flask, request, render_template, make_response
+from flask import Flask, request, render_template, make_response, session
+from flask_session import Session
+import secrets
 import json
 from flask_dropzone import Dropzone
 import cv2
 import os
 from image_manager import Image_manager
-from image_manager import get_path_to_image
+
 # path_to_image = os.path.join("static", "images", "trees01.jpeg")
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 
 app = Flask(__name__)
+
+session_life_in_seconds = 3600
+app.config.update(SECRET_KEY="We just need a secret here: I like yellow.")
+app.config.update(SESSION_TYPE="filesystem")
+app.config.update(PERMANENT_SESSION_LIFETIME=session_life_in_seconds)
+app.config.update(SESSION_FILE_DIR=os.path.join("output_no_git","way_2"))
+
+# Hmmmm How to describe this?
+Session(app)
+
 
 app.config.update(
     UPLOADED_PATH = os.path.join(basedir, 'uploads'),
@@ -24,12 +36,19 @@ dropzone = Dropzone(app)
 def upload(): 
     if request.method == "POST":
         file = request.files.get('file')
-        file.save(os.path.join(app.config['UPLOADED_PATH'], file.filename))
+        file_name = f"uploaded_{secrets.token_urlsafe(10)}_{file.filename}"
+        file.save(os.path.join(app.config['UPLOADED_PATH'], file_name))
+        session["uploaded_file"] = file_name
+        print(session)
     rendered_html = render_template("upload.html")
     return rendered_html
 
 @app.route("/")
 def index():
+    url_arguments = request.args.to_dict(flat=False)
+    if "name" in url_arguments:
+        session["name"] = url_arguments["name"][0]
+
     rendered_html = render_template("index.html")
     return rendered_html
 
@@ -39,31 +58,31 @@ def login():
     return rendered_html
 
 @app.route("/edit")
-def gallery():
+def edit():
     # Url arguments can be added to the url like this ?name=Peter&age=57
     # Get the url arguments if there are any
     url_arguments = request.args.to_dict(flat=False)
-    image_name = "standard"
+    image_modification = "standard"
     # if there are any url arguments, print them to the console here
     if len(url_arguments) > 0:
         print(f"\nThere were some url arguments and they were:\n{url_arguments}\n")
         if url_arguments["modification"][0] == "1":
             print("Mod 1")
-            image_name = "blurred"  
+            image_modification = "blurred"  
             
             
         if url_arguments["modification"][0] == "2":
-            image_name = "edged"
+            image_modification = "edged"
         if url_arguments["modification"][0] == "3":
-            image_name = "greyscale"
+            image_modification = "greyscale"
         if url_arguments["modification"][0] == "4":
-            image_name = "black_and_white"
+            image_modification = "black_and_white"
         
             
     else:
-        image_name = "standard"  
+        image_modification = "standard"  
 
-    rendered_html = render_template("edit.html", user="Rachel", image_name = image_name)
+    rendered_html = render_template("edit.html", user="Rachel", image_modification = image_modification)
     return rendered_html
 
 @app.route("/get_image")
@@ -71,17 +90,21 @@ def get_image():
 
    
     url_arguments = request.args.to_dict(flat=False)
-    image_name = url_arguments["image_name"][0]
+    image_modification = url_arguments["image_modification"][0]
+    image_name = session["uploaded_file"]
+    path_to_image = os.path.join(basedir, "uploads", image_name)
+    print(path_to_image)
+    print(image_modification)
 
-    path_to_image = get_path_to_image()
+    
     image_manager = Image_manager(path_to_image)  
 
  
-    image = image_manager.get_image(image_name)
+    image = image_manager.get_image(image_modification)
 
     retval, buffer = cv2.imencode(".png", image)
     response = make_response(buffer.tobytes())
-    response.headers["Content-Type"] = "image/png"
+    response.headers["Content-Type"] = "image/png" 
 
     return response   
 
@@ -89,7 +112,8 @@ def get_image():
 
 @app.route("/puzzle")
 def puzzle():
-    path_to_image = get_path_to_image()
+    image_name = session["uploaded_file"]
+    path_to_image = os.path.join(basedir, "uploads", image_name)
     cat_image = cv2.imread(path_to_image)
     cat_image = cv2.resize(cat_image, (500,500))
     print(cat_image.shape)

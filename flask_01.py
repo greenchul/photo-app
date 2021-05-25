@@ -76,7 +76,7 @@ def get_image():
     path_to_image = get_path_to_image()
     image_manager = Image_manager(path_to_image)  
 
-
+ 
     image = image_manager.get_image(image_name)
 
     retval, buffer = cv2.imencode(".png", image)

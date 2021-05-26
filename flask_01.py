@@ -115,7 +115,14 @@ def puzzle():
     image_name = session["uploaded_file"]
     path_to_image = os.path.join(basedir, "uploads", image_name)
     cat_image = cv2.imread(path_to_image)
-    cat_image = cv2.resize(cat_image, (500,500))
+    # cat_image = cv2.resize(cat_image, (500))
+    new_height = 500
+    scale = new_height/cat_image.shape[0] 
+    print(scale)
+    new_width = int(cat_image.shape[1] * scale)
+    print(new_width)
+    cat_image = cv2.resize(cat_image, (new_width, new_height))
+
     print(cat_image.shape)
 
     number_of_rows = 4

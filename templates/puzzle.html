@@ -10,7 +10,7 @@
         <link rel="stylesheet" href="/static/puzzle.css">
     </head>
     <body>
-        <h1>Puzzle</h1>
+        
         
         <div class="btn-div">
             <button class="btn">Shuffle</button>
@@ -71,6 +71,8 @@
                 
                 // remove correct image
                 imageContainer.innerHTML = " "
+
+                
                 // shuffle array
                 const shuffled = listOfImages.sort(() => Math.random() - 0.5)
                 shuffled.forEach(image=>{
@@ -85,11 +87,28 @@
                 let rand = Math.floor(Math.random() * 19)
                 let randomImage = shuffled[rand]
                 randomImgDiv.appendChild(randomImage)
-                randomImgDiv.style.display = "inline-block"
+                randomImgDiv.style.display = "block"
                 randomImgDiv.addEventListener("dragover", allowDrop)
                 randomImgDiv.addEventListener("drop", drop)
+                const sizes = setRandomDivSize()
+                let h = `${sizes[0]}px`
+                let w = `${sizes[1]}px`
+                randomImgDiv.style.height =  h
+                randomImgDiv.style.width = w
                 gameText.style.display = "none"
                 gameWon = false;
+            }
+
+            function setRandomDivSize(){
+                
+                console.log(images[0].height, images[0].width)
+                let height = images[0].height;
+                let width = images[0].width
+                const sizes = []
+                sizes.push(height);
+                sizes.push(width)
+                console.log(sizes)
+                return sizes
             }
 
             function checkIfWon(){
@@ -162,9 +181,6 @@
             }
 
             function drop(event) {
-               
-                
-                
                 event.preventDefault();
                 const id = event.dataTransfer.getData("text");
                 const movingImg = document.getElementById(id);

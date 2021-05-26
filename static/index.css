@@ -6,7 +6,7 @@ html{
 .main-container {
     height: 97vh;
     background-color: rgba(0, 128, 128, 0.418);
-    background-image: linear-gradient(rgba(197, 235, 197, 0.171),rgba(145, 145, 219, 0.349)), url("https://images.unsplash.com/photo-1453728013993-6d66e9c9123a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80");
+    background-image: linear-gradient(rgba(242, 243, 242, 0.788),rgba(228, 228, 231, 0.747)), url("https://images.unsplash.com/photo-1453728013993-6d66e9c9123a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80");
     background-size: cover;
     overflow:hidden;
     
@@ -16,6 +16,7 @@ html{
 
 h1{
     margin-bottom: 10px;
+    color: black;
     letter-spacing: 2px;
     animation-name: moveInLeft;
     animation-duration: 2s;

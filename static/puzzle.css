@@ -27,6 +27,7 @@ h1{
     grid-template-rows: 1fr 1fr 1fr 1fr;
     border: 1px solid black;
     box-shadow: 2.5px 2.5px rgb(39, 39, 39);
+    margin-bottom: 20px;
     
 
 }
@@ -45,6 +46,7 @@ img{
 .btn-div{
     text-align: center;
     margin-bottom: 20px;
+    margin-top: 20px;
 }
 
 .puzzle-container{
@@ -63,8 +65,9 @@ img{
 .random-img{
     display: none;
     background-color: cornsilk;
-    height: 120px;
+    height: 100px;
     width: 100px;
+    margin: 0 auto;
 }
 
 .game-text{

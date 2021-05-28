@@ -89,6 +89,7 @@ def get_image():
     url_arguments = request.args.to_dict(flat=False)
     image_modification = url_arguments["image_modification"][0]
     image_name = session["uploaded_file"]
+    print(image_name)
     path_to_image = os.path.join(basedir, "uploads", "output_no_git", image_name)
     print(path_to_image)
     print(image_modification)
@@ -121,7 +122,7 @@ def puzzle():
     print(new_width)
     cat_image = cv2.resize(cat_image, (new_width, new_height))
 
-    print(cat_image.shape)
+    print(cat_image.shape) 
 
     number_of_rows = 4
     number_of_cols = 5

@@ -120,32 +120,34 @@
                 for (let index = 0; index<arrayOfDivs.length; index++){
                     
                     let div = arrayOfDivs[index]
-                    
+                    console.log(div)
                     if(!div.firstChild){
                         console.log("no child image element - game not complete by user")
                         return
                     }
                     else{
-                        console.log("Puzzle complete")
                         let image = div.firstChild
-                     
-                        idOrder.push((image.id))
-                      
-                        // check if arrays match
-                        for(let index = 0; index< correctOrder.length; index ++){
-                            // console.log(idOrder[index] + " --- " + correctOrder[index])
-                            if (correctOrder[index] === idOrder[index]){
-                                gameWon = true
-                                
-                            }
-                            else{
-                                gameWon = false;
-                            }
-                        }  
-                    
+                        idOrder.push(image.id)
                     }
-                }
+
+                
+                }    
+                console.log(idOrder)
+                console.log(correctOrder)
+
+                for(let index = 0; index< correctOrder.length; index ++){
+                            
+                            if (correctOrder[index] !== idOrder[index]){
+                                return
+                            }
+                            
+                        } 
+                        gameWon = true
+                        gameText.style.display = "block"
+
+        
             }
+                    
 
 
             
@@ -184,11 +186,6 @@
                 movingImg.classList.remove("moving");
                 dropZone.appendChild(movingImg);
                 checkIfWon()
-                console.log(gameWon)
-                if (gameWon === true){
-                    gameText.style.display = "block"
-                }
-                
             }
 
 

@@ -52,10 +52,7 @@ def index():
     rendered_html = render_template("index.html")
     return rendered_html
 
-@app.route("/login")
-def login():
-    rendered_html = render_template("login.html")
-    return rendered_html
+
 
 @app.route("/edit")
 def edit():

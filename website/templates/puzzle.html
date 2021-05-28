@@ -53,7 +53,7 @@
                 path_to_image = paths_to_image[index]
                 imageId = index
                 createdImage = document.createElement("img")
-                createdImage.setAttribute("src", path_to_image)
+                createdImage.setAttribute("src", path_to_image+"?cache="+Math.floor(1000*Math.random()))
                 createdImage.setAttribute("draggable", true)
                 createdImage.setAttribute("id", imageId)
                 listOfImages.push(createdImage)
@@ -115,7 +115,7 @@
                 const idOrder = []
                 const correctOrder = ["0","1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19"]
                 let gameWon;
-                console.log(imageContainer.children)
+                // console.log(imageContainer.children)
                 let arrayOfDivs = imageContainer.children
                 for (let index = 0; index<arrayOfDivs.length; index++){
                     
@@ -133,9 +133,10 @@
                       
                         // check if arrays match
                         for(let index = 0; index< correctOrder.length; index ++){
-                            
+                            // console.log(idOrder[index] + " --- " + correctOrder[index])
                             if (correctOrder[index] === idOrder[index]){
                                 gameWon = true
+                                
                             }
                             else{
                                 gameWon = false;
@@ -144,11 +145,6 @@
                     
                     }
                 }
-
-                if (gameWon){
-                    gameText.style.display = "block"
-                }
-                return gameWon
             }
 
 
@@ -188,6 +184,10 @@
                 movingImg.classList.remove("moving");
                 dropZone.appendChild(movingImg);
                 checkIfWon()
+                console.log(gameWon)
+                if (gameWon === true){
+                    gameText.style.display = "block"
+                }
                 
             }
 

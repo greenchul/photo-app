@@ -5,14 +5,14 @@ import json
 from flask_dropzone import Dropzone
 import cv2
 import os
-from image_manager import Image_manager
+from website import Image_manager
 
 # path_to_image = os.path.join("static", "images", "trees01.jpeg")
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 
-app = Flask(__name__)
+from flask import current_app as app
 
 session_life_in_seconds = 3600
 app.config.update(SECRET_KEY="We just need a secret here: I like yellow.")
@@ -25,7 +25,7 @@ Session(app)
 
 
 app.config.update(
-    UPLOADED_PATH = os.path.join(basedir, 'uploads'),
+    UPLOADED_PATH = os.path.join(basedir, 'uploads', "output_no_git"),
     DROPZONE_ALLOWED_FILE_TYPE = "image",
     DROPZONE_MAX_FILES = "1" 
 
@@ -89,7 +89,7 @@ def get_image():
     url_arguments = request.args.to_dict(flat=False)
     image_modification = url_arguments["image_modification"][0]
     image_name = session["uploaded_file"]
-    path_to_image = os.path.join(basedir, "uploads", image_name)
+    path_to_image = os.path.join(basedir, "uploads", "output_no_git", image_name)
     print(path_to_image)
     print(image_modification)
 
@@ -110,8 +110,8 @@ def get_image():
 @app.route("/puzzle")
 def puzzle():
     image_name = session["uploaded_file"]
-    path_to_image = os.path.join(basedir, "uploads", image_name)
-    print(image_name)
+    path_to_image = os.path.join(basedir, "uploads", "output_no_git", image_name)
+    print(f"puzzle image is {image_name}")
     cat_image = cv2.imread(path_to_image)
     # cat_image = cv2.resize(cat_image, (500))
     new_height = 400
@@ -149,9 +149,9 @@ def puzzle():
             tile_col_index = tile_width * col_index
             tile = image[tile_row_index: tile_row_index + tile_height, tile_col_index: tile_col_index + tile_width]
             file_name = f"row_{row_index}_col_{col_index}.png"
-            path_to_image = os.path.join("static", "images", "puzzle", file_name)
-            paths_to_image.append(path_to_image)
-            cv2.imwrite(path_to_image, tile)   
+            path_to_image = os.path.join("static", "images", "puzzle", "output_no_git", file_name)
+            paths_to_image.append( path_to_image)
+            cv2.imwrite(os.path.join(basedir, path_to_image), tile)  
 
     paths_to_image_as_json = json.dumps(paths_to_image)
     rendered_html = render_template("puzzle.html", paths_to_image = paths_to_image, number_of_rows = number_of_rows, number_of_cols = number_of_cols, paths_to_image_as_json = paths_to_image_as_json)

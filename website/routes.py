@@ -37,7 +37,7 @@ app.config.update(
 dropzone = Dropzone(app)
 @app.route("/upload", methods=['POST', 'GET'])    
 def upload():
-    delete_old_files(app.config['UPLOADED_PATH'], 10)
+    delete_old_files(app.config['UPLOADED_PATH'], 24*3600)
     seconds = int(time.time()) 
     if request.method == "POST":
         file = request.files.get('file')
@@ -117,7 +117,7 @@ def get_image():
 
 @app.route("/puzzle")
 def puzzle():
-    delete_old_files((os.path.join(basedir, "uploads", "output_no_git")), 10)
+    delete_old_files((os.path.join(basedir, "uploads", "output_no_git")), 24*3600)
     image_name = session["uploaded_file"]
     path_to_image = os.path.join(basedir, "uploads", "output_no_git", image_name)
     print(f"puzzle image is {image_name}")

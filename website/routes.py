@@ -89,7 +89,8 @@ def get_image():
     url_arguments = request.args.to_dict(flat=False)
     image_modification = url_arguments["image_modification"][0]
     image_name = session["uploaded_file"]
-    print(image_name)
+    print(image_name
+    )
     path_to_image = os.path.join(basedir, "uploads", "output_no_git", image_name)
     print(path_to_image)
     print(image_modification)
@@ -142,14 +143,15 @@ def puzzle():
     tile_height = int(image.shape[0] / number_of_rows)  
 
     
-    paths_to_image = []  
+    paths_to_image = []
+    token = secrets.token_urlsafe(10)
 
     for row_index in range(number_of_rows):
         tile_row_index = tile_height * row_index
         for col_index in range(number_of_cols):
             tile_col_index = tile_width * col_index
             tile = image[tile_row_index: tile_row_index + tile_height, tile_col_index: tile_col_index + tile_width]
-            file_name = f"row_{row_index}_col_{col_index}.png"
+            file_name = f"row_{row_index}_col_{col_index}_{token}.png"
             path_to_image = os.path.join("static", "images", "puzzle", "output_no_git", file_name)
             paths_to_image.append( path_to_image)
             cv2.imwrite(os.path.join(basedir, path_to_image), tile)  

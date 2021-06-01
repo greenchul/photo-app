@@ -11,7 +11,37 @@ from website.image_manager import Image_manager
 
 from flask import Flask
 
+# create dir structures 
+basedir = os.path.abspath(os.path.dirname(__file__))
+try:
+    path = os.path.join(basedir, "uploads")
+    os.mkdir(path)
+except:
+    pass
 
+try: 
+    path = os.path.join(path, "output_no_git")
+    os.mkdir(path)
+except:
+    pass
+
+try:
+    path = os.path.join(basedir, "static", "images")
+    os.mkdir(path)
+except:
+    pass
+
+try:
+    path = os.path.join(basedir, "static", "images", "puzzle")
+    os.mkdir(path)
+except:
+    pass
+
+try:
+    path = os.path.join(basedir, "static", "images", "puzzle", "output_no_git")
+    os.mkdir(path)
+except:
+    pass
 
 
 def create_app():

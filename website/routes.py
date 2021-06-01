@@ -1,3 +1,4 @@
+
 from flask import Flask, request, render_template, make_response, session
 from flask_session import Session
 import secrets
@@ -6,6 +7,8 @@ from flask_dropzone import Dropzone
 import cv2
 import os
 from website import Image_manager
+import time
+from website.delete_old_files import delete_old_files
 
 # path_to_image = os.path.join("static", "images", "trees01.jpeg")
 
@@ -33,10 +36,13 @@ app.config.update(
  
 dropzone = Dropzone(app)
 @app.route("/upload", methods=['POST', 'GET'])    
-def upload(): 
+def upload():
+    delete_old_files(app.config['UPLOADED_PATH'], 10)
+    seconds = int(time.time()) 
     if request.method == "POST":
         file = request.files.get('file')
-        file_name = f"uploaded_{secrets.token_urlsafe(10)}_{file.filename}"
+        file_stub, __extension = os.path.splitext(file.filename)
+        file_name = f"uploaded_{secrets.token_urlsafe(10)}_{file_stub}_seconds_{seconds}_.png"
         file.save(os.path.join(app.config['UPLOADED_PATH'], file_name))
         session["uploaded_file"] = file_name
         print(session)
@@ -111,6 +117,7 @@ def get_image():
 
 @app.route("/puzzle")
 def puzzle():
+    delete_old_files((os.path.join(basedir, "uploads", "output_no_git")), 10)
     image_name = session["uploaded_file"]
     path_to_image = os.path.join(basedir, "uploads", "output_no_git", image_name)
     print(f"puzzle image is {image_name}")
@@ -145,13 +152,14 @@ def puzzle():
     
     paths_to_image = []
     token = secrets.token_urlsafe(10)
+    seconds = int(time.time())
 
     for row_index in range(number_of_rows):
         tile_row_index = tile_height * row_index
         for col_index in range(number_of_cols):
             tile_col_index = tile_width * col_index
             tile = image[tile_row_index: tile_row_index + tile_height, tile_col_index: tile_col_index + tile_width]
-            file_name = f"row_{row_index}_col_{col_index}_{token}.png"
+            file_name = f"row_{row_index}_col_{col_index}_{token}_seconds_{seconds}_.png"
             path_to_image = os.path.join("static", "images", "puzzle", "output_no_git", file_name)
             paths_to_image.append( path_to_image)
             cv2.imwrite(os.path.join(basedir, path_to_image), tile)  

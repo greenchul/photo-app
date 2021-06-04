@@ -14,9 +14,9 @@ body{
     
 }
 
-.main-container{
-    position: relative;
-}
+/* .main-container{
+    /* position: relative; */
+/* } */ 
 
 .upload-container{
     width: 80%;
@@ -44,7 +44,7 @@ button{
     padding: 10px;
     background-color: white;
     box-shadow: 2px 2px 2px black;
-    font-size: 30px;
+    
     margin: 0;
     position: absolute;
     top: 50%;
@@ -57,4 +57,27 @@ a, a:hover, a:focus, a:active {
     text-decoration: none;
     color: inherit;
     font-size: 30px;
+}
+
+@media (max-width:768px){
+    .upload-container{
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr;
+    }
+    h1{
+        text-align: center;
+    }
+    .dropzone{
+        min-height: auto;
+    }
+}
+
+@media (max-width:480px){
+    h1{
+        font-size: 70px;
+    }
+    a, a:hover, a:focus, a:active {
+        
+        font-size: 20px;
+    }
 }

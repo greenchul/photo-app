@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>3d Cube</title>
+        
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+        
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
+            crossorigin="anonymous">
+        </script>
+
+        <!-- Load the p5.js library -->
+        <script src="https://cdn.jsdelivr.net/npm/p5@1.3.1/lib/p5.js"></script>
+
+    </head>
+
+    <body>
+        <div style="text-align:center">
+            <div class="card m-5">
+                <div id='cubeContainer'>
+                    <h1>
+                        Our Cube
+                    </h1>
+
+                    <script>
+                        
+                        let cube = {};
+
+                        cube["rotator"] = 2;
+                        cube["mover"] = 5;
+                        cube["position"] = 50;
+                        cube["length"] = 100;
+                        cube["width"] = 400;
+                        cube["thickness"] = 20;
+
+                        function setup() {
+                            let myCanvas = createCanvas(800, 600, WEBGL);
+                            myCanvas.parent('cubeContainer');
+                        }
+
+                        function draw() {
+
+                            background(255);
+                            ambientLight(100);
+
+                            var cube_rotator = cube["rotator"];
+                            var cube_length = cube["length"];
+                            var cube_position = cube["position"];
+                            var cube_mover = cube["mover"];
+                            var cube_width = cube["width"];
+                            var cube_thickness = cube["thickness"];
+
+                            translate(0, cube_position, -100);
+                            pointLight(255, 255, 255, 100, 100, 100);
+                            specularMaterial(250, 250, 250);
+                     
+
+                            // This is where we set a condition so that the cube will bounce when it hits the bottom and top of our canvas
+                            if (cube_position >= 200 || cube_position <= -200) {
+                                cube_mover = -cube_mover;
+                                cube["mover"] = cube_mover ;
+                            }
+
+                            cube_position = cube_position + cube_mover;
+                            cube["position"] = cube_position;
+
+                            cube_rotator = cube_rotator - 1
+                            cube["rotator"] = cube_rotator;
+
+                            rotate(radians(cube_rotator));
+                            box(cube_length, cube_thickness, cube_width);
+                  
+
+                        }
+
+
+
+                    </script>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
+
+
+

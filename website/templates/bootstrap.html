@@ -1,0 +1,112 @@
+{% extends "bootstrap_5_layout.html" %}
+
+<!-- use the correct title-->
+{% block title %} Camera Capture Control {% endblock %}
+
+<!-- Now put the javascript in there  -->
+{% block scripts %} {{ super() }}
+
+<!-- End the block-->
+{% endblock %}
+
+<!-- Now put the styles into the bootstrap -->
+{% block styles %} {{ super() }}
+
+<!-- End the block-->
+{% endblock %}
+
+<!-- and now the meat-->
+{% block content %}{{ super() }}
+
+<div class="container">
+  <h1>Camera for Pi Unique Id:</h1>
+
+  <script>
+    // Where is the circle
+    
+    let width = 720;
+    let height = 400;
+    let x, y;
+    let yMover = 1;
+    let xMover = 1;
+    let diameter = 24;
+    const circles = [];
+    let numberOfCircles = 20;
+    for (let index = 0; index < numberOfCircles; index++) {
+      let circle = {};
+      circle["x"] = diameter/2 + Math.random() * (width-diameter);
+      circle["y"] = diameter/2 + Math.random() * (height-diameter);
+      circle["xMover"] = Math.random()*3 - 1.5;
+      circle["yMover"] = Math.random()*3 - 1.5;
+      circle["red"] = Math.random()*255;
+      circle["green"] = Math.random()*255;
+      circle["blue"] = Math.random()*255;
+
+      circles.push(circle)
+    }
+
+    function setup() {
+      createCanvas(width, height);
+      // Starts in the middle
+      x = width / 2;
+      y = height / 2;
+    }
+
+    
+
+    function draw() {
+      background(200);
+      for (let index = 0; index < numberOfCircles; index++) {
+        let circle = circles[index];
+
+        noStroke();
+        fill(circle.red, circle.green, circle.blue);
+        ellipse(circle.x, circle.y, diameter, diameter);
+
+        // Moving up at a constant speed
+        circle.y = circle.y + circle.yMover;
+        circle.x = circle.x + circle.xMover;
+
+        // Reset to the bottom
+        if (circle.y < 0 + diameter / 2 || circle.y > height - diameter / 2) {
+          circle.yMover = -circle.yMover;
+        }
+        if (circle.x < 0 + diameter / 2 || circle.x > width - diameter / 2) {
+          circle.xMover = -circle.xMover;
+        }
+      }
+    }
+  </script>
+
+  <div class="card" style="width: 36rem">
+    <div class="card-body">
+      <form action="" name="capture_control" method="POST">
+        <button
+          type="submit"
+          name="start_capture"
+          class="btn btn-lg btn-success mb-1"
+          aria-disabled=""
+        >
+          Start Capturing Camera Images
+        </button>
+        <button
+          type="submit"
+          name="stop_capture"
+          class="btn btn-lg btn-danger mb-1"
+          aria-disabled=""
+        >
+          Stop Capturing Camera Images
+        </button>
+      </form>
+      <h5 class="card-title">Latest Image Captured</h5>
+      <p class="card-text">This image was captured by the camera.</p>
+      <p class="card-text">
+        Location images are characterised by the darkness. It's because the
+        shutter speed is
+      </p>
+    </div>
+  </div>
+
+  <!-- End the block-->
+  {% endblock %}
+</div>

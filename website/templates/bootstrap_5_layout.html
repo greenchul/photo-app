@@ -1,0 +1,92 @@
+{% extends "bootstrap_5_base.html" %} {% block title %} Demo App {% endblock %}
+
+<!-- Now put the body attributes in -->
+{% block body_attribs %}{{ super() }}class="bg-light"{% endblock %}
+
+<!-- Now put the scripts into the bootstrap -->
+{% block scripts %} {{ super() }}
+
+<!-- End the block-->
+{% endblock %}
+
+<!-- Now put the styles into the bootstrap -->
+{% block styles %} {{ super() }}
+
+<style>
+    body {
+        font-family: 'Lato', sans-serif !important;
+    }
+    /* 
+          Not possible to overwrite attributes set in boostrap 4 like this 
+          However, these attributes are not set in boostrap 4 
+          So setting them here does work  
+          */
+    
+    .active {
+        font-weight: bold;
+        background-color: #ffffff;
+    }
+</style>
+
+<link href='https://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
+
+<!-- End the block-->
+{% endblock %}
+<!-- Now put the navbar in -->
+
+{% block navbar %}
+<!-- allow the navbar to be suppressed -->
+{% if not suppress_navbar %}
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{{ url_for('index') }}"><img src="/static/dt_squad_logo.png" alt="" width="80" height="80"></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-link active" aria-current="page" href="{{ url_for('index') }}">Home</a>
+                <a class="nav-link" href="#">List images</a>
+            </div>
+        </div>
+    </div>
+</nav>
+<!-- End of suppress navbar -->
+{% endif %}
+
+<!--
+        Now put the flash message area #]
+      -->
+<main role="main" class="container-fluid bg-light">
+    <div class="row">
+        <div class="col-md-8">
+            {% with messages = get_flashed_messages(with_categories=true) %} {% if messages %} {% for category, message in messages %}
+            <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %} {% endif %} {% endwith %}
+        </div>
+    </div>
+</main>
+{% endblock navbar%}
+<!-- Now put the content into the bootstrap -->
+
+
+<!-- Now the content -->
+
+{% block content %}{{ super() }} {% endblock content%}
+
+<!-- Now the Footer -->
+{% block footer %}{{ super() }}
+
+<!-- Make sure the body doesn't interfere with the footer-->
+<br> <br> <br> {{ super() }}
+
+<footer class="fixed-bottom mt-3 pb-0 pt-0 text-right bg-light" style="z-index: 9999; ">
+    <i class="material-icons">copyright</i> 2020<a href="https://www.dt-squad.com" target="_blank">
+    dt-squad Ltd </a>&nbsp
+</footer>
+
+{% endblock footer%}
+
+
+

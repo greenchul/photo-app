@@ -59,6 +59,10 @@ def index():
     rendered_html = render_template("index.html")
     return rendered_html
 
+@app.route("/bootstrap")
+def bootstrap():
+
+    return render_template("bootstrap.html")
 
 
 @app.route("/edit")

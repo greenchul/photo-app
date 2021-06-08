@@ -65,6 +65,10 @@ def bootstrap():
     return render_template("bootstrap.html")
 
 
+@app.route("/snow")
+def snow():
+    return render_template("snowfall.html")
+
 @app.route("/edit")
 def edit():
     # Url arguments can be added to the url like this ?name=Peter&age=57

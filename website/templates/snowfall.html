@@ -1,0 +1,126 @@
+<!-- {% extends "bootstrap_5_layout.html" %} -->
+
+<!-- use the correct title-->
+{% block title %} Snow {% endblock %}
+
+<!-- Now put the javascript in there  -->
+{% block scripts %} {{ super() }}
+
+<!-- End the block-->
+{% endblock %}
+
+<!-- Now put the styles into the bootstrap -->
+{% block styles %} {{ super() }}
+
+<!-- End the block-->
+{% endblock %}
+
+<!-- and now the meat-->
+{% block content %}{{ super() }}
+
+<div class="container">
+  
+
+
+
+  
+  <script>
+      let width = 400
+let height = 400
+var snowflakes = []
+let num = 80
+let counter = 0
+let sizeSlider
+let rateSlider
+
+
+for (let index = 0; index < num; index++)
+  {
+   const snowflake = {
+      x : Math.random() * width,
+      y : Math.random() * -height*2,
+      diameter: 7,
+      mover: 0.7,
+      falling: true
+    
+ } 
+   snowflakes.push(snowflake)
+}
+
+
+function setup() {
+  createCanvas(width, height);
+  
+  sizeSlider = createSlider(0.5, 25, 7)
+  sizeSlider.position(15, 20)
+  rateSlider = createSlider(0.5,5, 0.7)
+  rateSlider.position(15, 65)
+  textSize(15)
+  sizeSlider.style("cursor", "Pointer")
+  rateSlider.style("cursor", "Pointer")
+
+}
+
+function draw() {
+  background(50,139, 170);
+  text("Size", 0, 15 )
+  text("Rate", 0, 55 )
+  
+  for (let index = 0; index < snowflakes.length; index++){
+    let snow = snowflakes[index]
+    
+   
+   snow.diameter = sizeSlider.value()
+    
+    
+  
+    if (snow.falling == true){
+        snow.mover = rateSlider.value()
+    }
+   
+    
+    ellipse(snow.x, snow.y, snow.diameter, snow.diameter)
+    noStroke()
+    // make fall
+    snow.y = snow.y + snow.mover
+    // jiggle
+    snow.x = snow.x + random(-1, 1)
+    
+    
+    // stop on ground
+    if (snow.y > height - snow.diameter){
+      snow.falling = false
+      snow.mover = 0
+      setTimeout(function(){
+        snow.falling = true
+        snow.mover = 1
+      }, 300)
+      
+      
+    }
+    // restart
+    
+    if (snow.y > height){
+      
+      snow.y = -20
+      snow.x = Math.random() * width
+      counter ++;
+      
+      
+    }
+    
+    
+    
+    
+  }
+  
+  
+  
+  
+}
+
+      </script>
+      
+  <!-- End the block-->
+  {% endblock %}
+</div>

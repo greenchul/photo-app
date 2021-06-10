@@ -1,28 +1,80 @@
 <!DOCTYPE html>
 
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title></title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="/static/index.css">
-    </head>
-    <body>
-        <div class="main-container">
-            <div class="main-text">
-                <h1>Image Editor</h1>
-                <div class="main-buttons">
-                    <button class="buttons"><a href="/upload">Get Started</a></button>
-                    
-                </div>
-              
-            </div>
-            
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title></title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/static/index.css" />
+  </head>
+  <body>
+    <div class="main-container">
+      <div class="main-text">
+        <h1 class="title">Image Editor</h1>
+
+        <div id="myCanvas"></div>
+
+        <div class="main-buttons">
+          <button class="buttons"><a href="/upload">Get Started</a></button>
         </div>
-       
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.3.1/lib/p5.js"></script>
+    <!-- <script src="/static/sketch.js" async defer></script> -->
+    <script>
+      console.log("connected");
+
+      let cam;
+      let canvas;
+      let img;
+      let camera;
+      let width = window.innerWidth;
+      let height = window.innerHeight / 2;
+      console.log(width, height);
+
+      function preload() {
+        // camera
+        img = loadImage("static/sketch/slr_cam.jpg");
+        camera = loadModel("static/sketch/slr_cam.obj");
+      }
+
+      function setup() {
+        canvas = createCanvas(width, height, WEBGL);
+        canvas.parent("myCanvas");
+
+        cam = createCamera();
+        cam.setPosition(0, -250, 350);
+        cam.lookAt(0, 0, 0);
+      }
+
+      function draw() {
+        background(255);
+        angleMode(DEGREES);
+        ambientLight(255, 255, 255);
+        pointLight(255, 255, 255, 0, 0, 50);
+        pointLight(255, 255, 255, 0, 0, -50);
+        pointLight(255, 255, 255, 0, -50, 0);
+        pointLight(255, 255, 255, 0, 50, 0);
+        pointLight(255, 255, 255, 100, 50, 0);
+        directionalLight(255,255,255,0,0,0)
+
+        rotateX(-90);
+        rotateY(180);
+        translate(0, 0, 0);
+
+        push();
+        translate(0, 0, 0);
+        rotateZ(frameCount * 1);
+        scale(1.4)
+        texture(img);
         
-        <script src="" async defer></script>
-    </body>
+        model(camera);
+        noStroke();
+        pop();
+      }
+    </script>
+  </body>
 </html>

@@ -43,12 +43,16 @@
                         function setup() {
                             let myCanvas = createCanvas(800, 600, WEBGL);
                             myCanvas.parent('cubeContainer');
+                            camera = loadModel("/static/camera2.obj", true)
                         }
 
                         function draw() {
 
                             background(255);
                             ambientLight(100);
+
+                            translate(0,0,0)
+                            
 
                             var cube_rotator = cube["rotator"];
                             var cube_length = cube["length"];
@@ -58,8 +62,9 @@
                             var cube_thickness = cube["thickness"];
 
                             translate(0, cube_position, -100);
-                            pointLight(255, 255, 255, 100, 100, 100);
-                            specularMaterial(250, 250, 250);
+                            pointLight(50, 50, 100, 100, 100, 100);
+                            pointLight(100, 50, 100, 0, 0, 100);
+                            specularMaterial(128, 128, 128);
                      
 
                             // This is where we set a condition so that the cube will bounce when it hits the bottom and top of our canvas
@@ -75,7 +80,21 @@
                             cube["rotator"] = cube_rotator;
 
                             rotate(radians(cube_rotator));
-                            box(cube_length, cube_thickness, cube_width);
+                            
+
+                            model(camera)
+                            noStroke()
+                            push()
+
+                            rotate(radians(cube_rotator + 0.5));
+                            translate(0, cube_position + 20, +100);
+                            pointLight(50, 50, 100, 100, 100, 100);
+                            pointLight(100, 50, 100, 0, 0, 100);
+                            specularMaterial(128, 128, 128);
+                            model(camera)
+                            noStroke()
+                            pop()
+                            
                   
 
                         }

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+    </head>
+    <body>
+       <script>
+           async function fetchAsync(url){
+               let result = await(await fetch(url)).json()
+               
+               return result
+           }
+           function getData(){
+               fetchAsync("casino")
+               .then(data=> console.log(data))
+               .catch(reason=> console.log(reason))
+           } 
+           setInterval(function(){
+               getData()
+           },1000)
+           
+           
+       </script>
+        
+        <script src="" async defer></script>
+    </body>
+</html>

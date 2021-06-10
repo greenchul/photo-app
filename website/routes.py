@@ -1,11 +1,13 @@
 
-from flask import Flask, request, render_template, make_response, session
+from flask import Flask, request, render_template, make_response, session, jsonify
+import requests
 from flask_session import Session
 import secrets
 import json
 from flask_dropzone import Dropzone
 import cv2
 import os
+import random
 from website import Image_manager
 import time
 from website.delete_old_files import delete_old_files
@@ -68,6 +70,28 @@ def bootstrap():
 @app.route("/snow")
 def snow():
     return render_template("snowfall.html")
+
+@app.route("/casino")
+def casino():
+    dice_throw= int(random.random() * 6 + 1)
+    roulette_spin = int(random.random() * 37) 
+    if random.random() > 0.5:
+        coin_toss = "heads"
+        
+    else:
+        coin_toss = "tails"
+        
+    return jsonify(dict(coin_toss=coin_toss, dice_throw = dice_throw, roulette_spin = roulette_spin))
+
+@app.route("/display_casino")
+def display_casino():
+    return render_template("display_casino.html")
+
+@app.route("/starwars")
+def starwars():
+    response = requests.get("https://swapi.dev/api/people/")
+    return response.text
+
 
 @app.route("/edit")
 def edit():

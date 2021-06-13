@@ -3,32 +3,39 @@ html{
     padding: 0;
     font-family: Arial, Helvetica, sans-serif;
 }
-.main-container {
-    height: 97vh;
-    background-color: rgba(0, 128, 128, 0.418);
-    background-image: linear-gradient(rgba(242, 243, 242, 0.788),rgba(228, 228, 231, 0.747)), url("https://images.unsplash.com/photo-1453728013993-6d66e9c9123a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80");
-    background-size: cover;
-    overflow:hidden;
-    
-    color: whitesmoke;
 
-}
 
 h1{
     margin-bottom: 10px;
     color: black;
+    
+    text-align: center;
     letter-spacing: 2px;
     animation-name: moveInLeft;
     animation-duration: 2s;
 }
 
-.main-text{
+.title{
+    font-size: 100px;
+}
+
+/* .main-text{
     font-size: 50px;
     position: absolute;
     left: 50%;
     top: 25%;
     -webkit-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
+} */
+
+
+
+#myCanvas{
+    margin: 0 auto;
+}
+.cam-canvas{
+    margin: 0 auto;
+    width: 100% 
 }
 
 .main-buttons{
@@ -77,5 +84,19 @@ a, a:hover, a:focus, a:active {
     100% {
         opacity: 1;
         transform: translate(0);
+    }
+}
+
+@media (max-width:768px){
+   
+}
+
+@media (max-width:480px){
+    a, a:hover, a:focus, a:active {
+        
+        font-size: 20px;
+    }
+    .title{
+        font-size: 70px;
     }
 }

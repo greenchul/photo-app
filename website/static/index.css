@@ -33,6 +33,10 @@ h1{
 #myCanvas{
     margin: 0 auto;
 }
+.cam-canvas{
+    margin: 0 auto;
+    width: 100% 
+}
 
 .main-buttons{
     
@@ -80,5 +84,19 @@ a, a:hover, a:focus, a:active {
     100% {
         opacity: 1;
         transform: translate(0);
+    }
+}
+
+@media (max-width:768px){
+   
+}
+
+@media (max-width:480px){
+    a, a:hover, a:focus, a:active {
+        
+        font-size: 20px;
+    }
+    .title{
+        font-size: 70px;
     }
 }

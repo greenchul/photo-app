@@ -55,6 +55,9 @@
                 createdImage = document.createElement("img")
                 createdImage.setAttribute("src", path_to_image+"?cache="+Math.floor(1000*Math.random()))
                 createdImage.setAttribute("draggable", true)
+                createdImage.addEventListener('touchmove', function(){
+                    console.log("touch on mobile")
+                })
                 createdImage.setAttribute("id", imageId)
                 listOfImages.push(createdImage)
             }
@@ -201,6 +204,7 @@
                 
                 
         </script>
+        <script src="/static/DragDropTouch.js"></script>
 
     </body>
 </html>

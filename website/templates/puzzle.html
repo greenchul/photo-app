@@ -48,6 +48,12 @@
             let shuffleBtn = document.querySelector(".btn")
             shuffleBtn.addEventListener("click", shuffleImage)
 
+            let movingMobileImage;
+            let movingX;
+            let movingY;
+            let finishX
+            let finishY
+
             // loop through path to images array and create new image array
             for (let index = 0; index < paths_to_image.length; index++){
                 path_to_image = paths_to_image[index]
@@ -55,9 +61,8 @@
                 createdImage = document.createElement("img")
                 createdImage.setAttribute("src", path_to_image+"?cache="+Math.floor(1000*Math.random()))
                 createdImage.setAttribute("draggable", true)
-                createdImage.addEventListener('touchmove', function(){
-                    console.log("touch on mobile")
-                })
+                createdImage.addEventListener('touchmove', mobileTouchStart)
+                createdImage.addEventListener('touchend', mobileTouchEnd)
                 createdImage.setAttribute("id", imageId)
                 listOfImages.push(createdImage)
             }
@@ -93,6 +98,7 @@
                 randomImgDiv.style.display = "block"
                 randomImgDiv.addEventListener("dragover", allowDrop)
                 randomImgDiv.addEventListener("drop", drop)
+                randomImgDiv.addEventListener("touchend", mobileTouchEnd)
                 const sizes = setRandomDivSize()
                 let h = `${sizes[0]}px`
                 let w = `${sizes[1]}px`
@@ -191,6 +197,28 @@
                 checkIfWon()
             }
 
+            function mobileTouchStart(event){
+                console.log("mobile touch")
+                let touchStart = event.targetTouches[0].target
+                console.log(event.targetTouches[0].pageX)
+                console.log(touchStart)
+                movingMobileImage = touchStart
+                // console.log(movingMobileImage)
+                movingX = event.touches[0].clientX
+                movingY = event.touches[0].clientY
+                console.log("mouse is", movingX, movingY)
+            }
+
+            function mobileTouchEnd(event){
+                console.log("touch end")
+                console.log(event)
+                let newTarget = document.elementFromPoint(movingX, movingY)
+                console.log(newTarget)
+                newTarget.appendChild(movingMobileImage)
+                checkIfWon()
+                
+            }
+
 
            
                 
@@ -204,7 +232,7 @@
                 
                 
         </script>
-        <script src="/static/DragDropTouch.js"></script>
+        
 
     </body>
 </html>

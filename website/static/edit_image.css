@@ -5,7 +5,13 @@ html{
     color: white;
 }
 
+nav{
+    color: black;
+}
 
+.nav-link{
+    float:right
+}
 
 body{
     

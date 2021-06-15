@@ -39,7 +39,7 @@
 
         <script>
             var paths_to_image = JSON.parse('{{paths_to_image_as_json|safe}}')
-            console.log(paths_to_image);
+            // console.log(paths_to_image);
             var number_of_cols = {{number_of_cols}}
             
             let imageContainer = document.querySelector(".image-container")
@@ -116,7 +116,7 @@
                 const sizes = []
                 sizes.push(height);
                 sizes.push(width)
-                console.log(sizes)
+                // console.log(sizes)
                 return sizes
             }
 
@@ -129,9 +129,9 @@
                 for (let index = 0; index<arrayOfDivs.length; index++){
                     
                     let div = arrayOfDivs[index]
-                    console.log(div)
+                    // console.log(div)
                     if(!div.firstChild){
-                        console.log("no child image element - game not complete by user")
+                        // console.log("no child image element - game not complete by user")
                         return
                     }
                     else{
@@ -141,8 +141,8 @@
 
                 
                 }    
-                console.log(idOrder)
-                console.log(correctOrder)
+                // console.log(idOrder)
+                // console.log(correctOrder)
 
                 for(let index = 0; index< correctOrder.length; index ++){
                             
@@ -198,23 +198,29 @@
             }
 
             function mobileTouchStart(event){
-                console.log("mobile touch")
+                
                 let touchStart = event.targetTouches[0].target
-                console.log(event.targetTouches[0].pageX)
-                console.log(touchStart)
+                
                 movingMobileImage = touchStart
                 // console.log(movingMobileImage)
                 movingX = event.touches[0].clientX
                 movingY = event.touches[0].clientY
-                console.log("mouse is", movingX, movingY)
+                // console.log("mouse is", movingX, movingY)
             }
 
             function mobileTouchEnd(event){
                 console.log("touch end")
-                console.log(event)
+                
                 let newTarget = document.elementFromPoint(movingX, movingY)
-                console.log(newTarget)
-                newTarget.appendChild(movingMobileImage)
+                // console.log(newTarget)
+
+                if (newTarget.classList == "grid" || newTarget.classList == "random-img"){
+                    
+                    newTarget.appendChild(movingMobileImage)
+                }
+                
+
+                
                 checkIfWon()
                 
             }

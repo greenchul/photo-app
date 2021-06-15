@@ -121,6 +121,7 @@ def puzzle():
     delete_old_files((os.path.join(basedir, "uploads", "output_no_git")), 24*3600)
     image_name = session["uploaded_file"]
     path_to_image = os.path.join(basedir, "uploads", "output_no_git", image_name)
+   
     print(f"puzzle image is {image_name}")
     cat_image = cv2.imread(path_to_image)
     # cat_image = cv2.resize(cat_image, (500))
@@ -166,6 +167,8 @@ def puzzle():
             cv2.imwrite(os.path.join(basedir, path_to_image), tile)  
 
     paths_to_image_as_json = json.dumps(paths_to_image)
+    
+    
     rendered_html = render_template("puzzle.html", paths_to_image = paths_to_image, number_of_rows = number_of_rows, number_of_cols = number_of_cols, paths_to_image_as_json = paths_to_image_as_json)
     return rendered_html
 

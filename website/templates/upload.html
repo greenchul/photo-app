@@ -32,12 +32,43 @@
           </div>
         </div>
         <div class="btn-div">
-          <button><a href="/edit">Next</a></button>
+          <button id="next-button"><a id="link"href="/edit">Next</a></button>
         </div>  
 
       </div>
 
       
-        <script src="" async defer></script>
+        <script>
+          let uploaded_a_file = {{uploaded_a_file}}
+          console.log(uploaded_a_file)
+
+          let button = document.getElementById("next-button")
+          console.log(button)
+          let link = document.getElementById("link")
+          console.log(link)
+
+          let dropzone = document.getElementById("myDropzone")
+          console.log(dropzone)
+
+          
+
+          if (uploaded_a_file == false){
+            console.log("no file uploaded")
+            
+            link.href = "#"
+          }
+          else{
+            button.disabled = false 
+          }
+
+          button.addEventListener("mouseenter", ()=>{
+            console.log("mouse over!")
+            console.log(dropzone.children.length)
+            if (dropzone.children.length == 2){
+              link.href ="/edit"
+            }
+          })
+
+        </script>
     </body>
 </html>

@@ -38,6 +38,7 @@ app.config.update(
 dropzone = Dropzone(app)
 @app.route("/upload", methods=['POST', 'GET'])    
 def upload():
+    uploaded_a_file = "false"
     delete_old_files(app.config['UPLOADED_PATH'], 24*3600)
     seconds = int(time.time()) 
     if request.method == "POST":
@@ -46,8 +47,11 @@ def upload():
         file_name = f"uploaded_{secrets.token_urlsafe(10)}_{file_stub}_seconds_{seconds}_.png"
         file.save(os.path.join(app.config['UPLOADED_PATH'], file_name))
         session["uploaded_file"] = file_name
-        print(session)
-    rendered_html = render_template("upload.html")
+        print(f"session is... {session}")
+        uploaded_a_file = "true"
+        print(uploaded_a_file)
+    
+    rendered_html = render_template("upload.html", uploaded_a_file = uploaded_a_file, session = session)
     return rendered_html
 
 @app.route("/")
